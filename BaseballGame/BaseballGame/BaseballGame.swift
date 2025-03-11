@@ -34,17 +34,24 @@ final class BaseballGame {
 }
 
 extension BaseballGame {
+    // MARK: - 중복 없는 랜덤 숫자 생성
     private func makeRandomNumber() {
+        if !randomNumber.isEmpty { randomNumber.removeAll() }
+        
         var numberArray = Array(1...9)
         
-        for _ in 0..<3 {
+        for i in 0..<3 {
             guard let number = numberArray.randomElement(),
                   let index = numberArray.firstIndex(of: number) else { return }
             randomNumber.append(number)
             numberArray.remove(at: index)
+            if i == 0 {
+                numberArray.insert(0, at: 0)
+            }
         }
     }
     
+    // MARK: - Input 검증(유효하지 않은 입력인 경우 error throws)
     private func checkInput(_ input: String) throws -> Output {
         var strike = 0
         var ball = 0
@@ -62,6 +69,8 @@ extension BaseballGame {
         // 중복된 숫자 필터링
         let setInputNumbers = Set(inputNumbers)
         
+        
+        // 입력 숫자 검증
         if inputNumbers.count != 3 || setInputNumbers.count != 3 {
             throw NSError(domain: "InputError", code: 1)
         }
