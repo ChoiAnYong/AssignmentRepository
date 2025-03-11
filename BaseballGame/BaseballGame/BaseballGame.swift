@@ -17,15 +17,20 @@ final class BaseballGame {
             print(Menu.allCases.map { $0.description }.joined(separator: " "))
             
             guard let menuInput = readLine() else { return }
-            
-            switch checkMenuInput(menuInput) {
-            case .start:
-                startGame()
-            case .record:
-                recordPrint()
-            case .exit:
-                print("\n< 숫자 야구 게임을 종료합니다 >")
-                return
+            do {
+                let menu = try checkMenuInput(menuInput)
+                
+                switch menu {
+                case .start:
+                    startGame()
+                case .record:
+                    recordPrint()
+                case .exit:
+                    print("\n< 숫자 야구 게임을 종료합니다 >")
+                    return
+                }
+            } catch {
+                print("\n올바른 숫자를 입력해주세요!\n")
             }
         }
     }
@@ -98,8 +103,7 @@ extension BaseballGame {
         
         // 숫자 외의 값과 0 필터링
         var inputNumbers = try input.map {
-            guard let num = Int(String($0)),
-                  num != 0 else {
+            guard let num = Int(String($0)) else {
                 throw NSError(domain: "InputError", code: 1)
             }
             return num
@@ -140,9 +144,12 @@ extension BaseballGame {
         }
     }
     
-    private func checkMenuInput(_ input: String) -> Menu {
+    private func checkMenuInput(_ input: String) throws -> Menu {
         guard let input = Int(input),
-              input - 1 < Menu.allCases.count else { return .exit }
+              input - 1 < Menu.allCases.count,
+              input > 0 else {
+            throw NSError(domain: "InputError", code: 2)
+        }
         
         return Menu.allCases[input-1]
     }
