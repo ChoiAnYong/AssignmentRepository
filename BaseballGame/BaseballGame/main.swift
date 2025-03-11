@@ -8,5 +8,5 @@
 import Foundation
 
 let game = BaseballGame()
-game.start()
+game.run()
 
