@@ -9,6 +9,7 @@ import Foundation
 
 final class BaseballGame {
     var randomNumber: [Int] = []
+    var tryCounts: [Int] = []
     
     func run() {
         while true {
@@ -21,9 +22,9 @@ final class BaseballGame {
             case .start:
                 startGame()
             case .record:
-                break
+                recordPrint()
             case .exit:
-                print("< 숫자 야구 게임을 종료합니다 >")
+                print("\n< 숫자 야구 게임을 종료합니다 >")
                 return
             }
         }
@@ -32,24 +33,41 @@ final class BaseballGame {
 
 extension BaseballGame {
     private func startGame() {
+        var count = 0
+        
         makeRandomNumber()
         
-        print("< 게임을 시작합니다 >")
+        print("\n< 게임을 시작합니다 >")
         
         while true {
             print("숫자를 입력하세요")
             
             guard let input = readLine() else { return }
             
+            count += 1
+            
             do {
                 let result = try checkInput(input)
                 print("\(result.description)\n")
                 if result == .correct {
+                    tryCounts.append(count)
                     break
                 }
             } catch {
                 print("올바르지 않은 입력값입니다\n")
             }
+        }
+    }
+    
+    private func recordPrint() {
+        print("\n< 게임 기록 보기 >")
+        if tryCounts.isEmpty {
+            print("게임 기록이 없습니다.\n")
+        } else {
+            for i in 0..<tryCounts.count {
+                print("\(i+1)번째 게임 : 시도 횟수 - \(tryCounts[i])")
+            }
+            print("\n")
         }
     }
 }
