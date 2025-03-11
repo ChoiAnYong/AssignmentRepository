@@ -10,10 +10,31 @@ import Foundation
 final class BaseballGame {
     var randomNumber: [Int] = []
     
-    func start() {
+    func run() {
+        while true {
+            print("환영합니다! 원하시는 번호를 입력해주세요")
+            print(Menu.allCases.map { $0.description }.joined(separator: " "))
+            
+            guard let menuInput = readLine() else { return }
+            
+            switch checkMenuInput(menuInput) {
+            case .start:
+                startGame()
+            case .record:
+                break
+            case .exit:
+                print("< 숫자 야구 게임을 종료합니다 >")
+                return
+            }
+        }
+    }
+}
+
+extension BaseballGame {
+    private func startGame() {
         makeRandomNumber()
         
-        print(" < 게임을 시작합니다 >")
+        print("< 게임을 시작합니다 >")
         
         while true {
             print("숫자를 입력하세요")
@@ -99,5 +120,12 @@ extension BaseballGame {
         } else {
             return .hit(strike, ball)
         }
+    }
+    
+    private func checkMenuInput(_ input: String) -> Menu {
+        guard let input = Int(input),
+              input - 1 < Menu.allCases.count else { return .exit }
+        
+        return Menu.allCases[input-1]
     }
 }
