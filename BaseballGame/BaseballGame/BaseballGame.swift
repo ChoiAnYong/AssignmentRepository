@@ -17,6 +17,7 @@ final class BaseballGame {
             print(Menu.allCases.map { $0.description }.joined(separator: " "))
             
             guard let menuInput = readLine() else { return }
+            
             do {
                 let menu = try checkMenuInput(menuInput)
                 
@@ -37,6 +38,7 @@ final class BaseballGame {
 }
 
 extension BaseballGame {
+    // MARK: - 게임 시작 함수
     private func startGame() {
         var count = 0
         
@@ -64,6 +66,7 @@ extension BaseballGame {
         }
     }
     
+    // MARK: - 기록 출력 함수
     private func recordPrint() {
         print("\n< 게임 기록 보기 >")
         if tryCounts.isEmpty {
@@ -144,6 +147,7 @@ extension BaseballGame {
         }
     }
     
+    // MARK: - Menu Input 검증(유효하지 않은 입력인 경우 error throws)
     private func checkMenuInput(_ input: String) throws -> Menu {
         guard let input = Int(input),
               input - 1 < Menu.allCases.count,
