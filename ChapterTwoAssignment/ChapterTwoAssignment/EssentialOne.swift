@@ -20,3 +20,6 @@ final class EssentialOne {
 // 사용
 // let test = EssentialOne()
 // test.calculate(1, 1, test.sum)
+
+// 출력
+// 두 수의 합은 2입니다

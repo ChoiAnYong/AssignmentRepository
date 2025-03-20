@@ -30,3 +30,6 @@ final class EssentialTwo {
 //
 // print(result)
 
+// 출력
+// ["2", "4", "6", "8", "10"]
+// ["1", "2", "3", "4", "5"]
