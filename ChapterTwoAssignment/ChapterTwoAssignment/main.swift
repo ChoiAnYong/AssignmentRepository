@@ -7,5 +7,6 @@
 
 import Foundation
 
-print("Hello, World!")
 
+let test = EssentialOne()
+test.calculate(1, 1, test.sum)
