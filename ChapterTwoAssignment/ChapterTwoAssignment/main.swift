@@ -8,5 +8,15 @@
 import Foundation
 
 
-let test = EssentialOne()
-test.calculate(1, 1, test.sum)
+let one = EssentialOne()
+one.calculate(1, 1, one.sum)
+
+let two = EssentialTwo()
+
+two.chainingPrint()
+
+let result = two.myMap([1, 2, 3, 4, 5]) {
+    String($0)
+}
+
+print(result)
